@@ -1,4 +1,7 @@
 
+Calendar.defaults.resourcesInitiallyExpanded = true
+
+
 ###
 A row that renders information about a particular resource, as well as it events (handled by superclass)
 ###
@@ -6,8 +9,12 @@ class ResourceRow extends EventRow
 
 	resource: null
 
+
 	constructor: (view, @resource) ->
 		super
+
+		@isExpanded = view.opt('resourcesInitiallyExpanded')
+
 
 	###
 	Called when a row in the tree has been added
