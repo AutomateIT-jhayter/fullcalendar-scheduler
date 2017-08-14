@@ -803,8 +803,9 @@ class TimelineGrid extends Grid
 
 	unrenderFgContainers: (containers) ->
 		for container in containers
-			container.segContainerEl.empty()
-			container.segContainerEl.height('')
+			if container.segContainerEl
+				container.segContainerEl.empty()
+				container.segContainerEl.height('')
 			container.segContainerHeight = null
 
 
