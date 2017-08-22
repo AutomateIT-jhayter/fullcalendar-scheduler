@@ -342,6 +342,8 @@ class RowParent
 			@isExpanded = true
 			@indicateExpanded()
 
+			FC.waitForVerticalsHack = true
+
 			# show all the children
 			# one of the only places in this class where we explicitly batch/unbatch :(
 			@view.batchRows()
@@ -350,6 +352,8 @@ class RowParent
 			@view.unbatchRows()
 
 			@animateExpand()
+
+			FC.waitForVerticalsHack = false
 
 	###
 	Hides this node's children if they are not already hidden. Changes any expander icon.

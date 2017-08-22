@@ -747,18 +747,30 @@ class TimelineGrid extends Grid
 			for seg in segs
 				seg.el.appendTo(container.segContainerEl)
 
-		# compute seg verticals
-		for [ container, segs ] in pairs
-			for seg in segs
-				seg.height = seg.el.outerHeight(true) # include margin
-			@buildSegLevels(segs)
-			container.segContainerHeight = computeOffsetForSegs(segs) # returns this value!
+		doVerticals = =>
 
-		# assign seg verticals
-		for [ container, segs ] in pairs
-			for seg in segs
-				seg.el.css('top', seg.top)
-			container.segContainerEl.height(container.segContainerHeight)
+			# compute seg verticals
+			for [ container, segs ] in pairs
+				for seg in segs
+					seg.height = seg.el.outerHeight(true) # include margin
+				@buildSegLevels(segs)
+				container.segContainerHeight = computeOffsetForSegs(segs) # returns this value!
+
+			# assign seg verticals
+			for [ container, segs ] in pairs
+				for seg in segs
+					seg.el.css('top', seg.top)
+				container.segContainerEl.height(container.segContainerHeight)
+
+		if FC.waitForVerticalsHack
+			setTimeout =>
+				doVerticals()
+				@view.syncRowHeights()
+			, 0
+		else
+			doVerticals()
+
+		return
 
 
 	# NOTE: this modifies the order of segs
