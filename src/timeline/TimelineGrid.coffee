@@ -733,6 +733,7 @@ class TimelineGrid extends Grid
 
 
 	renderFgSegsInContainers: (pairs) ->
+		view = @view
 
 		for [ container, segs ] in pairs
 			for seg in segs
@@ -763,9 +764,12 @@ class TimelineGrid extends Grid
 				container.segContainerEl.height(container.segContainerHeight)
 
 		if FC.waitForVerticalsHack
-			setTimeout =>
+			setTimeout ->
 				doVerticals()
-				@view.syncRowHeights()
+				view.syncRowHeights()
+				setTimeout ->
+					view.calendar.updateSize()
+				, 1000
 			, 0
 		else
 			doVerticals()
